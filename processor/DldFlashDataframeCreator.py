@@ -278,33 +278,36 @@ class DldFlashProcessor(DldProcessor.DldProcessor):
     def createDataframePerMicrobunch(self):
         if _VERBOSE: print('creating microbunch dataframe...')
 
-        numOfMacrobunches = self.bam.shape[0]
-
+        numOfMacrobunches = self.pulseResolvedEnergy.shape[0]
+        numOfMicrobunches = self.pulseResolvedEnergy.shape[1]
+        
         # convert the delay stage position to the uBunch format
-        delayStageArray = numpy.zeros_like(self.bam)
+        delayStageArray = numpy.zeros_like(self.pulseResolvedEnergy)
         delayStageArray[:, :] = (self.delayStage[:])[:, None]
         daDelayStage = dask.array.from_array(delayStageArray.flatten(), chunks=self.CHUNK_SIZE)
 
         # convert the MacroBunchPulseId to the uBunch format
-        macroBunchPulseIdArray = numpy.zeros_like(self.bam)
+        macroBunchPulseIdArray = numpy.zeros_like(self.pulseResolvedEnergy)
         macroBunchPulseIdArray[:, :] = (self.macroBunchPulseId[:, 0])[:, None]
         daMacroBunchPulseId = dask.array.from_array(macroBunchPulseIdArray.flatten(), chunks=(self.CHUNK_SIZE))
 
         # convert the laser polarization motor position to the uBunch format
-        pumpPolArray = numpy.zeros_like(self.bam)
+        pumpPolArray = numpy.zeros_like(self.pulseResolvedEnergy)
         pumpPolArray[:] = (self.pumpPol[:,0])[:, None]
         daPumpPol = dask.array.from_array(pumpPolArray.flatten(), chunks=self.CHUNK_SIZE)
 
-        daBam = dask.array.from_array(self.bam.flatten(), chunks=(self.CHUNK_SIZE))
-        numOfMicrobunches = self.bam.shape[1]
+        bamArray = numpy.zeros_like(self.pulseResolvedEnergy)
+        bamArray[:, :] = (self.bam[:,:numOfMicrobunches])
+      
+        daBam = dask.array.from_array(bamArray.flatten(), chunks=(self.CHUNK_SIZE))
 
         # the Aux channel: aux0:
         dldAux0 = self.dldAux[:, 0]
-        aux0 = numpy.ones(self.bam.shape) * dldAux0[:, None]
+        aux0 = numpy.ones(self.pulseResolvedEnergy.shape) * dldAux0[:, None]
         daAux0 = dask.array.from_array(aux0.flatten(), chunks=(self.CHUNK_SIZE))
         # the Aux channel: aux1:
         dldAux1 = self.dldAux[:, 1]
-        aux1 = numpy.ones(self.bam.shape) * dldAux1[:, None]
+        aux1 = numpy.ones(self.pulseResolvedEnergy.shape) * dldAux1[:, None]
         daAux1 = dask.array.from_array(aux1.flatten(), chunks=(self.CHUNK_SIZE))
 
         daBunchCharge = dask.array.from_array(self.bunchCharge[:, 0:numOfMicrobunches].flatten(),

@@ -252,7 +252,7 @@ class DldProcessor():
         """
         try:
             if ax is None:
-                idx = self.binNameList.index('pumpProbeTime')
+                idx = self.binNameList.index('delayStageTime')
             else:
                 idx = ax
             data_array_normalized = np.swapaxes(data_array, 0, idx)
@@ -359,7 +359,7 @@ class DldProcessor():
         hh = h5File.create_group("histograms")
         if hasattr(self,'delaystageHistogram'):
             hh.create_dataset('delaystageHistogram', data=self.delaystageHistogram)
-        if hasattr(self,'delaystageHistogram'):
+        if hasattr(self,'pumpProbeHistogram'):
             hh.create_dataset('pumpProbeHistogram', data=self.pumpProbeHistogram)
 
         h5File.close()
@@ -571,11 +571,14 @@ class DldProcessor():
         self.binNameList.append(name)
         self.binRangeList.append(bins)
         if (name == 'pumpProbeTime'):
-            # self.delaystageHistogram = numpy.histogram(self.delaystage[numpy.isfinite(self.delaystage)], bins)[0]
-            delaystageHistBinner = self.ddMicrobunches['pumpProbeTime'].map_partitions(pandas.cut, bins)
-            delaystageHistGrouped = self.ddMicrobunches.groupby([delaystageHistBinner])
-            self.pumpProbeHistogram = delaystageHistGrouped.count().compute()['bam'].to_xarray().values.astype(
-                np.float64)
+#             self.delaystageHistogram = np.histogram(self.delaystage[np.isfinite(self.delaystage)], bins)[0]
+            pumpProbeBinner = self.ddMicrobunches['pumpProbeTime'].values.compute()
+            self.pumpProbeHistogram = np.histogram(pumpProbeBinner[np.isfinite(pumpProbeBinner)], bins)[0]
+
+#             delaystageHistBinner = self.ddMicrobunches['pumpProbeTime'].map_partitions(pandas.cut, bins)self.ddMicrobunches['pumpProbeTime']
+#             delaystageHistGrouped = self.ddMicrobunches.groupby([delaystageHistBinner])
+#             self.pumpProbeHistogram = delaystageHistGrouped.count().compute()['bam'].to_xarray().values.astype(
+#                 np.float64)
         if (name == 'delayStageTime'):
             # self.delaystageHistogram = numpy.histogram(self.delaystage[numpy.isfinite(self.delaystage)], bins)[0]
             delaystageHistBinner = self.ddMicrobunches['delayStageTime'].map_partitions(pandas.cut, bins)
