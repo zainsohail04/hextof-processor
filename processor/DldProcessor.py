@@ -606,10 +606,9 @@ class DldProcessor():
         Notes:
             postProcess method must be used before computing the binned data if binning along pumpProbeDelay or polar
             k-space coordinates.
-        """
-
-        def analyzePart(part):
-            """ Function called by each thread of the analysis."""
+            
+	def analyzePart(part):
+           #  Function called by each thread of the analysis.
             grouperList = []
             for i in range(len(self.binNameList)):
                 grouperList.append(pandas.cut(part[self.binNameList[i]], self.binRangeList[i]))
@@ -620,7 +619,7 @@ class DldProcessor():
         
         
         
-        
+        """ 
         # new binner for a partition, not using the Pandas framework. It should be faster!
         def analyzePartNumpy(part):
             """ Function called by each thread of the analysis. This now should be faster. """
@@ -641,6 +640,7 @@ class DldProcessor():
                 numBins.append(len(self.binRangeList[i])-1)
                 ranges.append((self.binRangeList[i].min(), self.binRangeList[i].max()))
             # now we are ready for the analysis with numpy:
+            print(vals[:,colsToBin])
             res, edges = np.histogramdd(vals[:,colsToBin],bins=numBins,range=ranges)
             return res
         
