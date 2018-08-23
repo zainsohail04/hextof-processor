@@ -55,14 +55,17 @@ def make_new_settings(rebuilding=False, clean=False):
             'bam': '/FL1/Electron Diagnostic/BAM/4DBC3/electron bunch arrival time (low charge)',
             'bunch_charge': '/FL1/Electron Diagnostic/Bunch charge/after undulator',
             'macro_bunch_pulse_id': '/FL1/Timing/Bunch train info/set pattern.sts',
-
             'optical_diode': '/FL1/Experiment/PG/SIS8300 100MHz ADC/CH9/pulse energy/TD',
             'gmd_tunnel': '/FL1/Photon Diagnostic/GMD/Pulse resolved energy/energy tunnel',
             'gmd_bda': '/FL1/Photon Diagnostic/GMD/Pulse resolved energy/energy BDA',
         },
         'DAQ address - not used': {}
     }
+	#Corrections:
+	settings_dict['DAQ address - used']['macro_bunch_pulse_id'] = '/FL1/Timing/Bunch pattern/train index 1.sts'
 
+
+#Settings in use during Scholz beamtime
 ###############################################3
 #[DAQ address - used]
 #dld_time = /FL1/Experiment/PG/Hextof/Detector/control info
