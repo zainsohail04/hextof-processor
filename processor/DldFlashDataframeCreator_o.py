@@ -232,11 +232,6 @@ class DldFlashProcessor(DldProcessor.DldProcessor):
             daDetectorId = dldDetectorId.flatten()
             arrayCols.append(daDetectorId)
 
-        if 'dldSectorId' in self.daqAddresses:
-            dldSectorId = (self.dldSectorId[mbIndexStart:mbIndexEnd, :].copy()).astype(int) % 8
-            daSectorId = dldSectorId.flatten()
-            arrayCols.append(daSectorId)
-
         if 'bunchCharge' in self.daqAddresses:
             bunchChargeArray = assignToMircobunch(
                 self.dldMicrobunchId[mbIndexStart:mbIndexEnd, :].astype(np.float64),
@@ -289,7 +284,7 @@ class DldFlashProcessor(DldProcessor.DldProcessor):
 
         # added macroBunchPulseId at last position
         # da = dask.array.stack([daX, daY, daTime, daDelaystage, daBam, daMicrobunchId,
-        #                       daDetectorId, daSectorId,daBunchCharge, daOpticalDiode,
+        #                       daDetectorId, daBunchCharge, daOpticalDiode,
         #                       daGmdTunnel, daMacroBunchPulseId])
         da = np.stack(arrayCols)
         return da
@@ -321,7 +316,7 @@ class DldFlashProcessor(DldProcessor.DldProcessor):
         a = np.concatenate(self.daListResult, axis=1)
         da = dask.array.from_array(a.T, chunks=self.CHUNK_SIZE)
 
-        cols = ('dldPosX', 'dldPosY', 'dldTime', 'delayStage', 'bam', 'dldMicrobunchId', 'dldDetectorId','dldSectorId', 'bunchCharge',
+        cols = ('dldPosX', 'dldPosY', 'dldTime', 'delayStage', 'bam', 'dldMicrobunchId', 'dldDetectorId', 'bunchCharge',
                 'opticalDiode', 'gmdTunnel', 'gmdBda', 'pumpPol', 'macroBunchPulseId')
 
         cols = tuple(x for x in cols if x in self.daqAddresses)

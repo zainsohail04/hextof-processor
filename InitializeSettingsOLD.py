@@ -43,45 +43,24 @@ def make_new_settings(rebuilding=False, clean=False):
 
         },
         'DAQ address - used': {
-            'dld_pos_x': "/FL1/Experiment/PG/Hextof/Detector/monitor 1",
-            'dld_pos_y': "/FL1/Experiment/PG/Hextof/Detector/monitor 2",
-            'dld_time': "/FL1/Experiment/PG/Hextof/Detector/control info",
-            'dld_detector_id': "/FL1/Experiment/PG/Hextof/Detector/control info",
-            'dld_sector_id': "/FL1/Experiment/PG/Hextof/Detector/control info",
-            'dld_microbunch_id': "/FL1/Experiment/PG/Hextof/Detector/monitor 3",
-            'dld_aux_0': "/FL1/Experiment/PG/Hextof/Detector/monitor 0",
-            'dld_aux_1': "/FL1/Experiment/PG/Hextof/Detector/monitor 0",
-            'delay_stage': "/FL1/Experiment/Pump probe laser/delay line IK220.0/ENC",
-            'bam': '/FL1/Electron Diagnostic/BAM/4DBC3/electron bunch arrival time (low charge)',
-            'bunch_charge': '/FL1/Electron Diagnostic/Bunch charge/after undulator',
-            'macro_bunch_pulse_id': '/FL1/Timing/Bunch train info/set pattern.sts',
-
-            'optical_diode': '/FL1/Experiment/PG/SIS8300 100MHz ADC/CH9/pulse energy/TD',
-            'gmd_tunnel': '/FL1/Photon Diagnostic/GMD/Pulse resolved energy/energy tunnel',
-            'gmd_bda': '/FL1/Photon Diagnostic/GMD/Pulse resolved energy/energy BDA',
+            'dld_pos_x': "/uncategorised/FLASH1_USER2/FLASH.FEL/HEXTOF.DAQ/DLD1:0/dset",
+            'dld_pos_y': "/uncategorised/FLASH1_USER2/FLASH.FEL/HEXTOF.DAQ/DLD1:1/dset",
+            'dld_time': "/uncategorised/FLASH1_USER2/FLASH.FEL/HEXTOF.DAQ/DLD1:3/dset",
+            'dld_detector_id': "/uncategorised/FLASH1_USER2/FLASH.FEL/HEXTOF.DAQ/DLD1:3/dset",
+            'dld_microbunch_id': "/uncategorised/FLASH1_USER2/FLASH.FEL/HEXTOF.DAQ/DLD1:2/dset",
+            'dld_aux_0': "/uncategorised/FLASH1_USER2/FLASH.FEL/HEXTOF.DAQ/DLD1:4/dset",
+            'dld_aux_1': "/uncategorised/FLASH1_USER2/FLASH.FEL/HEXTOF.DAQ/DLD1:4/dset",
+            'delay_stage': "/Experiment/Pump probe laser/delay line IK220.0/ENC",
+            'bam': '/Electron Diagnostic/BAM/4DBC3/electron bunch arrival time (low charge)',
+            'bunch_charge': '/Electron Diagnostic/Bunch charge/after undulator',
+            'macro_bunch_pulse_id': '/Timing/Bunch train info/index 1.sts',
+            'optical_diode': '/Experiment/PG/SIS8300 100MHz ADC/CH9/pulse energy/TD',
+            'gmd_tunnel': '/Photon Diagnostic/GMD/Pulse resolved energy/energy tunnel',
+            'gmd_bda': '/Photon Diagnostic/GMD/Pulse resolved energy/energy BDA',
+            'pump_pol': '/uncategorised/FLASH1_USER2/FLASH.EXP/NF.ESP301/PG2/MOTOR3.POS/dset',
         },
         'DAQ address - not used': {}
     }
-
-###############################################3
-#[DAQ address - used]
-#dld_time = /FL1/Experiment/PG/Hextof/Detector/control info
-#dld_aux_1 = /FL1/Experiment/PG/Hextof/Detector/monitor 0
-#bunch_charge = /FL1/Electron Diagnostic/Bunch charge/after undulator
-#bam = /FL1/Electron Diagnostic/BAM/4DBC3/electron bunch arrival time (low charge)
-#gmd_bda = /FL1/Photon Diagnostic/GMD/Pulse resolved energy/energy BDA
-#dld_detector_id = /FL1/Experiment/PG/Hextof/Detector/control info
-#dld_sector_id = /FL1/Experiment/PG/Hextof/Detector/control info
-#dld_microbunch_id = /FL1/Experiment/PG/Hextof/Detector/monitor 3
-#dld_pos_y = /FL1/Experiment/PG/Hextof/Detector/monitor 2
-#dld_aux_0 = /FL1/Experiment/PG/Hextof/Detector/monitor 0
-#dld_pos_x = /FL1/Experiment/PG/Hextof/Detector/monitor 1
-#delay_stage = /FL1/Experiment/Pump probe laser/delay line IK220.0/ENC
-#optical_diode = /FL1/Experiment/PG/SIS8300 100MHz ADC/CH9/pulse energy/TD
-#macro_bunch_pulse_id = /FL1/Timing/Bunch pattern/train index 1.sts
-#gmd_tunnel = /FL1/Photon Diagnostic/GMD/Pulse resolved energy/energy tunnel
-###########################################3
-
 
     # write dictionary to .ini structure
     for section_name, section in settings_dict.items():
