@@ -27,6 +27,7 @@ jobs:
       with:
         python-versions: 'cp37-cp37m'
         build-requirements: 'cython numpy'
+        package-path: 'linux_build'
 #     - name: Publish wheels to PyPI
 #       env:
 #         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
